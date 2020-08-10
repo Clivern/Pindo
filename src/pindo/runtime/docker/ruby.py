@@ -22,4 +22,97 @@
 
 
 class Ruby():
-	pass
+    """Ruby Runtime Class"""
+
+    # Docker Image
+    _image = "ruby"
+
+    # Default Version
+    _version = "3.0"
+
+    # All supported versions
+    _versions = {
+        "2.6": "Version 2.6",
+        "2.6.1": "Version 2.6.1",
+        "2.6.2": "Version 2.6.2",
+        "2.6.3": "Version 2.6.3",
+        "2.6.4": "Version 2.6.4",
+        "2.6.5": "Version 2.6.5",
+        "2.6.6": "Version 2.6.6",
+        "2.6.7": "Version 2.6.7",
+        "2.6.8": "Version 2.6.8",
+        "2.6.9": "Version 2.6.9",
+        "2.7.0": "Version 2.7.0",
+        "2.7.1": "Version 2.7.1",
+        "2.7.3": "Version 2.7.3",
+        "2.7.4": "Version 2.7.4",
+        "2.7.5": "Version 2.7.5",
+        "3.0.0": "Version 3.0.0",
+    }
+
+    # File extension
+    _extension = "rb"
+
+    def __init__(self, version="3.0"):
+        """Class Constructor"""
+        self._version = version
+
+    @property
+    def script(self):
+        """
+        Get execution script content
+
+        Returns:
+            the execution script content
+        """
+        return "\n".join([
+            "#!/bin/bash",
+            "",
+            "start_time=$(date +%s%N)",
+            "ruby /code/run.rb",
+            "elapsed=$((($(date +%s%N) - $start_time)/1000000))",
+            "echo \"-------\"",
+            "echo \"Execution time in milliseconds: \"$elapsed",
+            "",
+        ])
+
+    @property
+    def versions(self):
+        """
+        Get all supported versions
+
+        Returns:
+            A dict of supported versions
+        """
+        return self._versions
+
+    @property
+    def image(self):
+        """
+        Get docker image name
+
+        Returns:
+            the docker image
+        """
+        return self._image
+
+    @property
+    def version(self):
+        """
+        Get the default version
+
+        Returns:
+            the default version
+        """
+        return self._version
+
+    @property
+    def extension(self):
+        """
+        Get the extension
+
+        Returns:
+            the extension
+        """
+        return self._extension
+

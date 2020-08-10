@@ -1,17 +1,182 @@
-# Copyright 2021 Clivern
+# MIT License
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Copyright (c) 2021 Clivern
 #
-#     https://www.apache.org/licenses/LICENSE-2.0
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+from .code import Code
+from .lang import Lang
+from .runtime.docker.go import Go
+from .runtime.docker.php import PHP
+from .runtime.docker.rust import Rust
+from .runtime.docker.ruby import Ruby
+from .runtime.docker.java import Java
+from .runtime.docker.python import Python
+from .runtime.docker.engine import Engine
+from .exception.invalid_runtime_version import InvalidRuntimeVersion
 
 
 class Runner():
-	pass
+    """Factory Class for Runtime engine and Programming Languages Supported"""
+
+    @classmethod
+    def docker(cls, local_storage_path, code, docker_client=None):
+        """
+        Get an instance of docker engine
+
+        Args:
+            local_storage_path: A local path to store files that get mounted into docker container
+            code: an instance of Code class with the code snippet, language and version
+
+        Returns:
+            an instance of docker engine
+        """
+        if not local_storage_path:
+            raise Exception("Local storage path must be provided!")
+
+        if not code or not isinstance(code, Code):
+            raise Exception("Code of type Code must be provided!")
+
+        return Engine(local_storage_path, code, docker_client)
+
+    @classmethod
+    def go(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of go runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in Go().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.GO.value
+            ))
+
+        return Code(code, Lang.GO, version, id, meta)
+
+    @classmethod
+    def php(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of php runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in PHP().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.PHP.value
+            ))
+
+        return Code(code, Lang.PHP, version, id, meta)
+
+    @classmethod
+    def ruby(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of ruby runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in Ruby().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.RUBY.value
+            ))
+
+        return Code(code, Lang.RUBY, version, id, meta)
+
+    @classmethod
+    def java(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of java runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in Java().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.JAVA.value
+            ))
+
+        return Code(code, Lang.JAVA, version, id, meta)
+
+    @classmethod
+    def python(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of python runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in Python().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.PYTHON.value
+            ))
+
+        return Code(code, Lang.PYTHON, version, id, meta)
+
+    @classmethod
+    def rust(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of rust runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in Rust().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.RUST.value
+            ))
+
+        return Code(code, Lang.RUST, version, id, meta)
