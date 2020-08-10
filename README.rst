@@ -23,9 +23,9 @@
         :alt: Twitter
         :target: https://twitter.com/Pindo
 
-.. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
-    :alt: Project generated with PyScaffold
-    :target: https://pyscaffold.org/
+.. image:: https://github.com/Clivern/Pindo/actions/workflows/ci.yml/badge.svg
+    :alt: Build Status
+    :target: https://github.com/Clivern/Pindo/actions/workflows/ci.yml
 
 |
 
@@ -33,11 +33,10 @@
 Pindo
 =====
 
+    Build and Run Code in Docker.
 
-    Add a short description here!
 
-
-A longer description of your project goes here...
+It support a broad range of runtimes (programming languages) and versions.
 
 
 .. _pyscaffold-notes:
@@ -45,5 +44,4 @@ A longer description of your project goes here...
 Note
 ====
 
-This project has been set up using PyScaffold 4.1.1. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+This project is created and maintained for Interpret. see https://github.com/Clivern/Interpret

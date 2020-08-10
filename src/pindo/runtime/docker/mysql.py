@@ -20,103 +20,90 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import uuid
-import json
-from .lang import Lang
 
+class MySQL():
+	"""MySQL Runtime Class"""
 
-class Code():
-	"""Code To Run"""
+	# Docker Image
+	_image = "mysql"
 
-	def __init__(self, code, lang, version, id=None, meta = {}):
-		self._code = code
-		self._lang = lang
+	# Default Version
+	_version = "5.7"
+
+	# All supported versions
+	# To get all supported versions
+	# $ curl 'https://registry.hub.docker.com/v2/repositories/library/mysql/tags/?page_size=1000' -s | jq '."results"[]["name"]'
+	_versions = {
+		"5.5": "Version 5.5",
+		"5.6": "Version 5.6",
+		"5.7": "Version 5.7",
+		"8.0": "Version 8.0",
+	}
+
+	# File extension
+	_extension = "sql"
+
+	def __init__(self, version="5.7"):
+		"""Class Constructor"""
 		self._version = version
-		self._id = str(uuid.uuid4()) if id is None else id
-		self._meta = meta
 
 	@property
-	def code(self):
+	def script(self):
 		"""
-		Gets the code snippet
+		Get execution script content
 
 		Returns:
-			The code snippet
+			the execution script content
 		"""
-		return self._code
+		return "\n".join([
+			"#!/bin/bash",
+			"",
+			"start_time=$(date +%s.%3N)",
+			"mysql < /code/run.sql",
+			"end_time=$(date +%s.%3N)",
+			"elapsed=$(echo \"scale=3; $end_time - $start_time\" | bc)",
+			"echo \"-------\"",
+			"echo \"Execution time in milliseconds: \"$elapsed",
+			"",
+		])
 
 	@property
-	def lang(self):
+	def versions(self):
 		"""
-		Gets the language type
+		Get all supported versions
 
 		Returns:
-			The language type
+			A dict of supported versions
 		"""
-		return self._lang
+		return self._versions
+
+	@property
+	def image(self):
+		"""
+		Get docker image name
+
+		Returns:
+			the docker image
+		"""
+		return self._image
 
 	@property
 	def version(self):
 		"""
-		Gets the language version
+		Get the default version
 
 		Returns:
-			The language version
+			the default version
 		"""
 		return self._version
 
 	@property
-	def id(self):
+	def extension(self):
 		"""
-		Gets the code instance ID
+		Get the extension
 
 		Returns:
-			The code instance ID
+			the extension
 		"""
-		return self._id
+		return self._extension
 
-	@property
-	def meta(self):
-		"""
-		Gets the code meta data
-
-		Returns:
-			The code meta data
-		"""
-		return self._meta
-
-	@classmethod
-	def from_string(cls, data):
-		"""
-		Get Code from JSON string
-
-		Args:
-			data: the JSON string
-
-		Returns:
-			An instance of this class
-		"""
-		data = json.loads(data)
-
-		return cls(
-			data['code'],
-			Lang.get_item(data['lang']),
-			data['version'],
-			data['id'],
-			data['meta']
-		)
-
-	def __str__(self):
-		"""
-		Convert the Object to string
-
-		Returns:
-			A JSON representation of this instance
-		"""
-		return json.dumps({
-			'id': self._id,
-			'code': self._code,
-			'lang': self._lang.value,
-			'version': self._version,
-			'meta': self._meta,
-		})
