@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 1.1.1
+=============
+
+- Remove docs dir
+
 Version 1.1.0
 =============
 
