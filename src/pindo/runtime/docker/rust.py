@@ -36,6 +36,8 @@ class Rust():
         "1.55.0": "Version 1.55.0",
         "1.56.0": "Version 1.56.0",
         "1.57.0": "Version 1.57.0",
+        "1.58.0": "Version 1.58.0",
+        "1.58.1": "Version 1.58.1",
     }
 
     # File extension

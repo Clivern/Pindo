@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 1.1.0
+=============
+
+- Add Python 3.10 and Rust 1.58.0 & 1.58.1
+
 Version 1.0.0
 =============
 
