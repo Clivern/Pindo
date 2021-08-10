@@ -24,11 +24,13 @@ import os
 import stat
 import docker
 import shutil
+from .c import C
 from .go import Go
 from .php import PHP
 from .rust import Rust
 from .ruby import Ruby
 from .java import Java
+from .cplus import Cplus
 from .python import Python
 from pindo.lang import Lang
 from pindo.exception.code_failed_to_run import CodeFailedToRun
@@ -212,6 +214,12 @@ class Engine():
 
         elif code.lang == Lang.PYTHON:
             return Python(code.version)
+
+        elif code.lang == Lang.CPLUS:
+            return Cplus(code.version)
+
+        elif code.lang == Lang.C:
+            return C(code.version)
 
         elif code.lang == Lang.JAVA:
             if "main_class" in code.meta.keys():

@@ -20,52 +20,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from enum import Enum
+from pindo.runner import Runner
 
+if __name__ == "__main__":
 
-class Lang(Enum):
-    """Language Types"""
+    code = """
+    #include <iostream>
 
-    RUST = "rust"
-    GO = "go"
-    PHP = "php"
-    PYTHON = "python"
-    JAVA = "java"
-    RUBY = "ruby"
-    C = "c"
-    CPLUS = "cplus"
+    int main() {
+        std::cout << "Hello, world!";
+        return 0;
+    }
+    """
 
-    @classmethod
-    def get_item(cls, key):
-        """
-        Get Enum key with the value
+    cplus_code = Runner.cplus(code, "9.4.0")
 
-        Args:
-            key: the value
+    engine = Runner.docker(cplus_code)
 
-        Returns:
-            The key
-        """
-        if key == "rust":
-            return cls.RUST
-
-        elif key == "go":
-            return cls.GO
-
-        elif key == "php":
-            return cls.PHP
-
-        elif key == "python":
-            return cls.PYTHON
-
-        elif key == "java":
-            return cls.JAVA
-
-        elif key == "ruby":
-            return cls.RUBY
-
-        elif key == "c":
-            return cls.C
-
-        elif key == "cplus":
-            return cls.CPLUS
+    engine.setup()
+    print(engine.run())
+    engine.cleanup()

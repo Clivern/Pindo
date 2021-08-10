@@ -2,15 +2,21 @@
 Changelog
 =========
 
+Version 1.0.0
+=============
+
+- Stable Version.
+- Support C & C++.
+
 Version 0.3.0
 =============
 
-Cleanup stale arguments
+- Cleanup stale arguments.
 
 Version 0.2.8
 =============
 
-Fix go, rust and java runtimes.
+- Fix go, rust and java runtimes.
 
 Version 0.2.7
 =============

@@ -22,11 +22,13 @@
 
 from .code import Code
 from .lang import Lang
+from .runtime.docker.c import C
 from .runtime.docker.go import Go
 from .runtime.docker.php import PHP
 from .runtime.docker.rust import Rust
 from .runtime.docker.ruby import Ruby
 from .runtime.docker.java import Java
+from .runtime.docker.cplus import Cplus
 from .runtime.docker.python import Python
 from .runtime.docker.engine import Engine
 from .exception.invalid_runtime_version import InvalidRuntimeVersion
@@ -42,6 +44,7 @@ class Runner():
 
         Args:
             code: an instance of Code class with the code snippet, language and version
+            docker_client: an instance of docker client
 
         Returns:
             an instance of docker engine
@@ -59,6 +62,7 @@ class Runner():
         Args:
             code: the code snippet to run
             version: the language version
+            id: code item uuid
             meta: meta data that may be needed for the runtime
 
         Returns:
@@ -80,6 +84,7 @@ class Runner():
         Args:
             code: the code snippet to run
             version: the language version
+            id: code item uuid
             meta: meta data that may be needed for the runtime
 
         Returns:
@@ -101,6 +106,7 @@ class Runner():
         Args:
             code: the code snippet to run
             version: the language version
+            id: code item uuid
             meta: meta data that may be needed for the runtime
 
         Returns:
@@ -122,6 +128,7 @@ class Runner():
         Args:
             code: the code snippet to run
             version: the language version
+            id: code item uuid
             meta: meta data that may be needed for the runtime
 
         Returns:
@@ -143,6 +150,7 @@ class Runner():
         Args:
             code: the code snippet to run
             version: the language version
+            id: code item uuid
             meta: meta data that may be needed for the runtime
 
         Returns:
@@ -164,6 +172,7 @@ class Runner():
         Args:
             code: the code snippet to run
             version: the language version
+            id: code item uuid
             meta: meta data that may be needed for the runtime
 
         Returns:
@@ -176,3 +185,47 @@ class Runner():
             ))
 
         return Code(code, Lang.RUST, version, id, meta)
+
+    @classmethod
+    def c(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of C runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            id: code item uuid
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in C().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.C.value
+            ))
+
+        return Code(code, Lang.C, version, id, meta)
+
+    @classmethod
+    def cplus(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of C++ runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            id: code item uuid
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in Cplus().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.CPLUS.value
+            ))
+
+        return Code(code, Lang.CPLUS, version, id, meta)

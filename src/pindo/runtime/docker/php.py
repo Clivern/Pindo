@@ -110,4 +110,3 @@ class PHP():
             the extension
         """
         return self._extension
-

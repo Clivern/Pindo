@@ -108,4 +108,3 @@ class Python():
             the extension
         """
         return self._extension
-
