@@ -27,7 +27,6 @@ from pindo.runner import Runner
 from pindo.runner import Runner
 from pindo.runtime.docker.go import Go
 from pindo.runtime.docker.java import Java
-from pindo.runtime.docker.mysql import MySQL
 from pindo.runtime.docker.php import PHP
 from pindo.runtime.docker.python import Python
 from pindo.runtime.docker.ruby import Ruby
@@ -37,7 +36,10 @@ from pindo.runtime.docker.engine import Engine
 
 def test_docker_engine():
     docker = Mock()
-    docker.containers.run.return_value = "Hello World\n-------\nBuild time in milliseconds: 20\nExecution time in milliseconds: 60\n"
+    container = Mock()
+    container.logs.return_value = [b'Hello World\n-------\nExecution time in milliseconds: 60\nBuild time in milliseconds: 20']
+    docker.containers.run.return_value = container
+    docker.api.remove_container.return_value = True
 
     path = os.path.dirname(os.path.realpath(__file__)) + "/../../cache"
     code = Runner.ruby("puts 'Hello World'", "3.0.0")
@@ -59,7 +61,6 @@ def test_docker_engine():
     go_code = Runner.go("~~", "1.17")
     rust_code = Runner.rust("~~", "1.57.0")
     java_code = Runner.java("~~", "17.0")
-    mysql_code = Runner.mysql("~~", "8.0")
 
     assert isinstance(Engine.get_runtime(ruby_code), Ruby) == True
     assert isinstance(Engine.get_runtime(php_code), PHP) == True
@@ -67,4 +68,3 @@ def test_docker_engine():
     assert isinstance(Engine.get_runtime(go_code), Go) == True
     assert isinstance(Engine.get_runtime(rust_code), Rust) == True
     assert isinstance(Engine.get_runtime(java_code), Java) == True
-    assert isinstance(Engine.get_runtime(mysql_code), MySQL) == True

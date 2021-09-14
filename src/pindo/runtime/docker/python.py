@@ -28,7 +28,6 @@ class Python():
     _image = "python"
 
     # Default Version
-
     _version = "3.8"
 
     # All supported versions

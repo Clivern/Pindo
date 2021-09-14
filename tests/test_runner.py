@@ -37,7 +37,6 @@ def test_runner():
     go_code = Runner.go("~~", "1.17")
     rust_code = Runner.rust("~~", "1.57.0")
     java_code = Runner.java("~~", "17.0")
-    mysql_code = Runner.mysql("~~", "8.0")
 
     assert isinstance(ruby_code, Code) == True
     assert isinstance(php_code, Code) == True
@@ -45,7 +44,6 @@ def test_runner():
     assert isinstance(go_code, Code) == True
     assert isinstance(rust_code, Code) == True
     assert isinstance(java_code, Code) == True
-    assert isinstance(mysql_code, Code) == True
 
     # Invalid Version
     with pytest.raises(InvalidRuntimeVersion):
@@ -65,10 +63,6 @@ def test_runner():
 
     with pytest.raises(InvalidRuntimeVersion):
         Runner.java("~~", "1.0.0")
-
-    with pytest.raises(InvalidRuntimeVersion):
-        Runner.mysql("~~", "1.0.0")
-
 
     # Invalid storage path
     with pytest.raises(Exception):

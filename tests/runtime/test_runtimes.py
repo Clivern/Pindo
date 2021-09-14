@@ -24,7 +24,6 @@ import pytest
 
 from pindo.runtime.docker.go import Go
 from pindo.runtime.docker.java import Java
-from pindo.runtime.docker.mysql import MySQL
 from pindo.runtime.docker.php import PHP
 from pindo.runtime.docker.python import Python
 from pindo.runtime.docker.ruby import Ruby
@@ -58,20 +57,6 @@ def test_java_runtime():
     assert java_rt.extension != ""
     assert java_rt.version == "1.0.0"
     assert java_rt.main_class == "Run"
-
-
-def test_mysql_runtime():
-    """MySQL Runtime Tests"""
-    mysql_rt = MySQL("1.0.0")
-
-    assert isinstance(mysql_rt, MySQL) == True
-    assert mysql_rt.script != ""
-    assert "#!/bin/bash" in mysql_rt.script
-    assert isinstance(mysql_rt.versions, dict) == True
-    assert len(mysql_rt.versions) > 0
-    assert mysql_rt.image != ""
-    assert mysql_rt.extension != ""
-    assert mysql_rt.version == "1.0.0"
 
 
 def test_php_runtime():

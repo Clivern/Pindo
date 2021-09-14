@@ -29,7 +29,6 @@ from .php import PHP
 from .rust import Rust
 from .ruby import Ruby
 from .java import Java
-from .mysql import MySQL
 from .python import Python
 from pindo.lang import Lang
 from pindo.exception.code_failed_to_run import CodeFailedToRun
@@ -52,15 +51,23 @@ class Engine():
             The output, execution and build time
         """
         try:
-            result = self._docker_client.containers.run(
+            container = self._docker_client.containers.run(
                 "{}:{}".format(self._runtime.image, self._runtime.version),
                 "bash /code/exec.sh",
-                volumes={"{}/{}".format(self._local_storage_path, self._code.id): {'bind': '/code', 'mode': 'rw'}}
+                volumes={"{}/{}".format(self._local_storage_path, self._code.id): {'bind': '/code', 'mode': 'rw'}},
+                detach=True
             )
         except Exception as e:
             raise CodeFailedToRun("Code %s failed to run: {}".format(self._code.id, str(e)))
 
-        result = str(result, 'utf-8')
+        result = []
+        for line in container.logs(stream=True):
+            result.append(str(line, 'utf-8'))
+
+        # Remove the container
+        self._docker_client.api.remove_container(container.id, force=True, v=True)
+
+        result = "".join(result)
         items = result.rsplit("-------", 1)
         stats = items[1].split("\n")
         build_time = None
@@ -84,7 +91,11 @@ class Engine():
         """
         path = "{}/{}".format(self._local_storage_path, self._code.id)
         file = "{}/{}".format(path, "exec.sh")
-        script = "{}/run.{}".format(path, self._runtime.extension)
+
+        if self._code.lang == Lang.JAVA:
+            script = "{}/{}.{}".format(path, self._runtime.main_class, self._runtime.extension)
+        else:
+            script = "{}/run.{}".format(path, self._runtime.extension)
 
         if not os.path.isdir(path):
             os.makedirs(path)
@@ -140,9 +151,6 @@ class Engine():
 
         elif code.lang == Lang.RUBY:
             return Ruby(code.version)
-
-        elif code.lang == Lang.MYSQL:
-            return MySQL(code.version)
 
         else:
             raise Exception("Invalid language {}".format(self._code.lang.value))

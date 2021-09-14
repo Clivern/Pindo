@@ -27,7 +27,6 @@ from .runtime.docker.php import PHP
 from .runtime.docker.rust import Rust
 from .runtime.docker.ruby import Ruby
 from .runtime.docker.java import Java
-from .runtime.docker.mysql import MySQL
 from .runtime.docker.python import Python
 from .runtime.docker.engine import Engine
 from .exception.invalid_runtime_version import InvalidRuntimeVersion
@@ -97,27 +96,6 @@ class Runner():
             ))
 
         return Code(code, Lang.PHP, version, id, meta)
-
-    @classmethod
-    def mysql(cls, code, version, id=None, meta={}):
-        """
-        Get an instance of mysql runtime
-
-        Args:
-            code: the code snippet to run
-            version: the language version
-            meta: meta data that may be needed for the runtime
-
-        Returns:
-            an instance of Code class
-        """
-        if version not in MySQL().versions.keys():
-            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
-                version,
-                Lang.MYSQL.value
-            ))
-
-        return Code(code, Lang.MYSQL, version, id, meta)
 
     @classmethod
     def ruby(cls, code, version, id=None, meta={}):

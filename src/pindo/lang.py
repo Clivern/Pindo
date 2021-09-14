@@ -32,7 +32,6 @@ class Lang(Enum):
     PYTHON = "python"
     JAVA = "java"
     RUBY = "ruby"
-    MYSQL = "mysql"
 
     @classmethod
     def get_item(cls, key):
@@ -62,6 +61,3 @@ class Lang(Enum):
 
         elif key == "ruby":
             return cls.RUBY
-
-        elif key == "mysql":
-            return cls.MYSQL

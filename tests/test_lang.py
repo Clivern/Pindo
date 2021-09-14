@@ -34,7 +34,6 @@ def test_lang():
     assert Lang.GO.value == "go"
     assert Lang.PYTHON.value == "python"
     assert Lang.PHP.value == "php"
-    assert Lang.MYSQL.value == "mysql"
 
     assert Lang.get_item("ruby") == Lang.RUBY
     assert Lang.get_item("rust") == Lang.RUST
@@ -42,4 +41,3 @@ def test_lang():
     assert Lang.get_item("go") == Lang.GO
     assert Lang.get_item("python") == Lang.PYTHON
     assert Lang.get_item("php") == Lang.PHP
-    assert Lang.get_item("mysql") == Lang.MYSQL
