@@ -60,7 +60,8 @@ class Engine():
         except Exception as e:
             raise CodeFailedToRun("Code %s failed to run: {}".format(self._code.id, str(e)))
 
-        items = str(result).rsplit("-------", 1)
+        result = str(result, 'utf-8')
+        items = result.rsplit("-------", 1)
         stats = items[1].split("\n")
         build_time = None
         execution_time = None
