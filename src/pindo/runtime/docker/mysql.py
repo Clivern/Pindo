@@ -22,88 +22,88 @@
 
 
 class MySQL():
-	"""MySQL Runtime Class"""
+    """MySQL Runtime Class"""
 
-	# Docker Image
-	_image = "mysql"
+    # Docker Image
+    _image = "mysql"
 
-	# Default Version
-	_version = "5.7"
+    # Default Version
+    _version = "5.7"
 
-	# All supported versions
-	# To get all supported versions
-	# $ curl 'https://registry.hub.docker.com/v2/repositories/library/mysql/tags/?page_size=1000' -s | jq '."results"[]["name"]'
-	_versions = {
-		"5.5": "Version 5.5",
-		"5.6": "Version 5.6",
-		"5.7": "Version 5.7",
-		"8.0": "Version 8.0",
-	}
+    # All supported versions
+    # To get all supported versions
+    # $ curl 'https://registry.hub.docker.com/v2/repositories/library/mysql/tags/?page_size=1000' -s | jq '."results"[]["name"]'
+    _versions = {
+        "5.5": "Version 5.5",
+        "5.6": "Version 5.6",
+        "5.7": "Version 5.7",
+        "8.0": "Version 8.0",
+    }
 
-	# File extension
-	_extension = "sql"
+    # File extension
+    _extension = "sql"
 
-	def __init__(self, version="5.7"):
-		"""Class Constructor"""
-		self._version = version
+    def __init__(self, version="5.7"):
+        """Class Constructor"""
+        self._version = version
 
-	@property
-	def script(self):
-		"""
-		Get execution script content
+    @property
+    def script(self):
+        """
+        Get execution script content
 
-		Returns:
-			the execution script content
-		"""
-		return "\n".join([
-			"#!/bin/bash",
-			"",
-			"start_time=$(date +%s.%3N)",
-			"mysql < /code/run.sql",
-			"end_time=$(date +%s.%3N)",
-			"elapsed=$(echo \"scale=3; $end_time - $start_time\" | bc)",
-			"echo \"-------\"",
-			"echo \"Execution time in milliseconds: \"$elapsed",
-			"",
-		])
+        Returns:
+            the execution script content
+        """
+        return "\n".join([
+            "#!/bin/bash",
+            "",
+            "start_time=$(date +%s.%3N)",
+            "mysql < /code/run.sql",
+            "end_time=$(date +%s.%3N)",
+            "elapsed=$(echo \"scale=3; $end_time - $start_time\" | bc)",
+            "echo \"-------\"",
+            "echo \"Execution time in milliseconds: \"$elapsed",
+            "",
+        ])
 
-	@property
-	def versions(self):
-		"""
-		Get all supported versions
+    @property
+    def versions(self):
+        """
+        Get all supported versions
 
-		Returns:
-			A dict of supported versions
-		"""
-		return self._versions
+        Returns:
+            A dict of supported versions
+        """
+        return self._versions
 
-	@property
-	def image(self):
-		"""
-		Get docker image name
+    @property
+    def image(self):
+        """
+        Get docker image name
 
-		Returns:
-			the docker image
-		"""
-		return self._image
+        Returns:
+            the docker image
+        """
+        return self._image
 
-	@property
-	def version(self):
-		"""
-		Get the default version
+    @property
+    def version(self):
+        """
+        Get the default version
 
-		Returns:
-			the default version
-		"""
-		return self._version
+        Returns:
+            the default version
+        """
+        return self._version
 
-	@property
-	def extension(self):
-		"""
-		Get the extension
+    @property
+    def extension(self):
+        """
+        Get the extension
 
-		Returns:
-			the extension
-		"""
-		return self._extension
+        Returns:
+            the extension
+        """
+        return self._extension
 

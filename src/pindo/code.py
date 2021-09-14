@@ -26,97 +26,97 @@ from .lang import Lang
 
 
 class Code():
-	"""Code To Run"""
+    """Code To Run"""
 
-	def __init__(self, code, lang, version, id=None, meta = {}):
-		self._code = code
-		self._lang = lang
-		self._version = version
-		self._id = str(uuid.uuid4()) if id is None else id
-		self._meta = meta
+    def __init__(self, code, lang, version, id=None, meta = {}):
+        self._code = code
+        self._lang = lang
+        self._version = version
+        self._id = str(uuid.uuid4()) if id is None else id
+        self._meta = meta
 
-	@property
-	def code(self):
-		"""
-		Gets the code snippet
+    @property
+    def code(self):
+        """
+        Gets the code snippet
 
-		Returns:
-			The code snippet
-		"""
-		return self._code
+        Returns:
+            The code snippet
+        """
+        return self._code
 
-	@property
-	def lang(self):
-		"""
-		Gets the language type
+    @property
+    def lang(self):
+        """
+        Gets the language type
 
-		Returns:
-			The language type
-		"""
-		return self._lang
+        Returns:
+            The language type
+        """
+        return self._lang
 
-	@property
-	def version(self):
-		"""
-		Gets the language version
+    @property
+    def version(self):
+        """
+        Gets the language version
 
-		Returns:
-			The language version
-		"""
-		return self._version
+        Returns:
+            The language version
+        """
+        return self._version
 
-	@property
-	def id(self):
-		"""
-		Gets the code instance ID
+    @property
+    def id(self):
+        """
+        Gets the code instance ID
 
-		Returns:
-			The code instance ID
-		"""
-		return self._id
+        Returns:
+            The code instance ID
+        """
+        return self._id
 
-	@property
-	def meta(self):
-		"""
-		Gets the code meta data
+    @property
+    def meta(self):
+        """
+        Gets the code meta data
 
-		Returns:
-			The code meta data
-		"""
-		return self._meta
+        Returns:
+            The code meta data
+        """
+        return self._meta
 
-	@classmethod
-	def from_string(cls, data):
-		"""
-		Get Code from JSON string
+    @classmethod
+    def from_string(cls, data):
+        """
+        Get Code from JSON string
 
-		Args:
-			data: the JSON string
+        Args:
+            data: the JSON string
 
-		Returns:
-			An instance of this class
-		"""
-		data = json.loads(data)
+        Returns:
+            An instance of this class
+        """
+        data = json.loads(data)
 
-		return cls(
-			data['code'],
-			Lang.get_item(data['lang']),
-			data['version'],
-			data['id'],
-			data['meta']
-		)
+        return cls(
+            data['code'],
+            Lang.get_item(data['lang']),
+            data['version'],
+            data['id'],
+            data['meta']
+        )
 
-	def __str__(self):
-		"""
-		Convert the Object to string
+    def __str__(self):
+        """
+        Convert the Object to string
 
-		Returns:
-			A JSON representation of this instance
-		"""
-		return json.dumps({
-			'id': self._id,
-			'code': self._code,
-			'lang': self._lang.value,
-			'version': self._version,
-			'meta': self._meta,
-		})
+        Returns:
+            A JSON representation of this instance
+        """
+        return json.dumps({
+            'id': self._id,
+            'code': self._code,
+            'lang': self._lang.value,
+            'version': self._version,
+            'meta': self._meta,
+        })

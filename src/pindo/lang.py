@@ -24,44 +24,44 @@ from enum import Enum
 
 
 class Lang(Enum):
-	"""Language Types"""
+    """Language Types"""
 
-	RUST = "rust"
-	GO = "go"
-	PHP = "php"
-	PYTHON = "python"
-	JAVA = "java"
-	RUBY = "ruby"
-	MYSQL = "mysql"
+    RUST = "rust"
+    GO = "go"
+    PHP = "php"
+    PYTHON = "python"
+    JAVA = "java"
+    RUBY = "ruby"
+    MYSQL = "mysql"
 
-	@classmethod
-	def get_item(cls, key):
-		"""
-		Get Enum key with the value
+    @classmethod
+    def get_item(cls, key):
+        """
+        Get Enum key with the value
 
-		Args:
-			key: the value
+        Args:
+            key: the value
 
-		Returns:
-			The key
-		"""
-		if key == "rust":
-			return cls.RUST
+        Returns:
+            The key
+        """
+        if key == "rust":
+            return cls.RUST
 
-		elif key == "go":
-			return cls.GO
+        elif key == "go":
+            return cls.GO
 
-		elif key == "php":
-			return cls.PHP
+        elif key == "php":
+            return cls.PHP
 
-		elif key == "python":
-			return cls.PYTHON
+        elif key == "python":
+            return cls.PYTHON
 
-		elif key == "java":
-			return cls.JAVA
+        elif key == "java":
+            return cls.JAVA
 
-		elif key == "ruby":
-			return cls.RUBY
+        elif key == "ruby":
+            return cls.RUBY
 
-		elif key == "mysql":
-			return cls.MYSQL
+        elif key == "mysql":
+            return cls.MYSQL

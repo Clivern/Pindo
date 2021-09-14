@@ -22,108 +22,108 @@
 
 
 class Java():
-	"""Java Runtime Class"""
+    """Java Runtime Class"""
 
-	# Docker Image
-	_image = "openjdk"
+    # Docker Image
+    _image = "openjdk"
 
-	# Default Version
-	_version = "11"
+    # Default Version
+    _version = "11"
 
-	# All supported versions
-	# curl 'https://registry.hub.docker.com/v2/repositories/library/openjdk/tags/?page_size=1000&name=16.0' -s | jq '."results"[]["name"]'
-	_versions = {
-		"10.0": "Version 10.0",
-		"11.0": "Version 11.0",
-		"12.0": "Version 12.0",
-		"13.0": "Version 13.0",
-		"14.0": "Version 14.0",
-		"15.0": "Version 15.0",
-		"16.0": "Version 16.0",
-		"17.0": "Version 17.0",
-	}
+    # All supported versions
+    # curl 'https://registry.hub.docker.com/v2/repositories/library/openjdk/tags/?page_size=1000&name=16.0' -s | jq '."results"[]["name"]'
+    _versions = {
+        "10.0": "Version 10.0",
+        "11.0": "Version 11.0",
+        "12.0": "Version 12.0",
+        "13.0": "Version 13.0",
+        "14.0": "Version 14.0",
+        "15.0": "Version 15.0",
+        "16.0": "Version 16.0",
+        "17.0": "Version 17.0",
+    }
 
-	# File extension
-	_extension = "java"
+    # File extension
+    _extension = "java"
 
-	def __init__(self, version="11", main_class="Run"):
-		"""Class Constructor"""
-		self._version = version
-		self._main_class = main_class
+    def __init__(self, version="11", main_class="Run"):
+        """Class Constructor"""
+        self._version = version
+        self._main_class = main_class
 
-	@property
-	def script(self):
-		"""
-		Get execution script content
+    @property
+    def script(self):
+        """
+        Get execution script content
 
-		Returns:
-			the execution script content
-		"""
-		return "\n".join([
-			"#!/bin/bash",
-			"",
-			"cd /code",
-			"start_time1=$(date +%s.%3N)",
-			"javac {}.java".format(self._main_class),
-			"end_time1=$(date +%s.%3N)",
-			"elapsed1=$(echo \"scale=3; $end_time1 - $start_time1\" | bc)",
-			"start_time2=$(date +%s.%3N)",
-			"java {}".format(self._main_class),
-			"end_time2=$(date +%s.%3N)",
-			"elapsed2=$(echo \"scale=3; $end_time2 - $start_time2\" | bc)",
-			"echo \"-------\"",
-			"echo \"Build time in milliseconds: \"$elapsed1",
-			"echo \"Execution time in milliseconds: \"$elapsed2",
-			"",
-		])
+        Returns:
+            the execution script content
+        """
+        return "\n".join([
+            "#!/bin/bash",
+            "",
+            "cd /code",
+            "start_time1=$(date +%s.%3N)",
+            "javac {}.java".format(self._main_class),
+            "end_time1=$(date +%s.%3N)",
+            "elapsed1=$(echo \"scale=3; $end_time1 - $start_time1\" | bc)",
+            "start_time2=$(date +%s.%3N)",
+            "java {}".format(self._main_class),
+            "end_time2=$(date +%s.%3N)",
+            "elapsed2=$(echo \"scale=3; $end_time2 - $start_time2\" | bc)",
+            "echo \"-------\"",
+            "echo \"Build time in milliseconds: \"$elapsed1",
+            "echo \"Execution time in milliseconds: \"$elapsed2",
+            "",
+        ])
 
-	@property
-	def versions(self):
-		"""
-		Get all supported versions
+    @property
+    def versions(self):
+        """
+        Get all supported versions
 
-		Returns:
-			A dict of supported versions
-		"""
-		return self._versions
+        Returns:
+            A dict of supported versions
+        """
+        return self._versions
 
-	@property
-	def image(self):
-		"""
-		Get docker image name
+    @property
+    def image(self):
+        """
+        Get docker image name
 
-		Returns:
-			the docker image
-		"""
-		return self._image
+        Returns:
+            the docker image
+        """
+        return self._image
 
-	@property
-	def version(self):
-		"""
-		Get the default version
+    @property
+    def version(self):
+        """
+        Get the default version
 
-		Returns:
-			the default version
-		"""
-		return self._version
+        Returns:
+            the default version
+        """
+        return self._version
 
-	@property
-	def main_class(self):
-		"""
-		Get the main class name
+    @property
+    def main_class(self):
+        """
+        Get the main class name
 
-		Returns:
-			the main class name
-		"""
-		return self._main_class
+        Returns:
+            the main class name
+        """
+        return self._main_class
 
-	@property
-	def extension(self):
-		"""
-		Get the extension
+    @property
+    def extension(self):
+        """
+        Get the extension
 
-		Returns:
-			the extension
-		"""
-		return self._extension
+        Returns:
+            the extension
+        """
+        return self._extension
 

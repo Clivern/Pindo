@@ -46,6 +46,11 @@ version:
 	$(PYTHON) setup.py --version
 
 
+## release: Release to PyPi
+release:
+	$(PYTHON) -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+
+
 ## install: Install the package locally
 .PHONY: install
 install:

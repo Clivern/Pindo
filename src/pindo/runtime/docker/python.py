@@ -22,89 +22,89 @@
 
 
 class Python():
-	"""Python Runtime Class"""
+    """Python Runtime Class"""
 
-	# Docker Image
-	_image = "python"
+    # Docker Image
+    _image = "python"
 
-	# Default Version
+    # Default Version
 
-	_version = "3.8"
+    _version = "3.8"
 
-	# All supported versions
-	_versions = {
-		"2.7": "Version 2.7",
-		"3": "Version 3",
-		"3.6": "Version 3.6",
-		"3.7": "Version 3.7",
-		"3.8": "Version 3.8",
-		"3.9": "Version 3.9",
-	}
+    # All supported versions
+    _versions = {
+        "2.7": "Version 2.7",
+        "3": "Version 3",
+        "3.6": "Version 3.6",
+        "3.7": "Version 3.7",
+        "3.8": "Version 3.8",
+        "3.9": "Version 3.9",
+    }
 
-	# File extension
-	_extension = "py"
+    # File extension
+    _extension = "py"
 
-	def __init__(self, version="3.8"):
-		"""Class Constructor"""
-		self._version = version
+    def __init__(self, version="3.8"):
+        """Class Constructor"""
+        self._version = version
 
-	@property
-	def script(self):
-		"""
-		Get execution script content
+    @property
+    def script(self):
+        """
+        Get execution script content
 
-		Returns:
-			the execution script content
-		"""
-		return "\n".join([
-			"#!/bin/bash",
-			"",
-			"start_time=$(date +%s.%3N)",
-			"python /code/run.py",
-			"end_time=$(date +%s.%3N)",
-			"elapsed=$(echo \"scale=3; $end_time - $start_time\" | bc)",
-			"echo \"-------\"",
-			"echo \"Execution time in milliseconds: \"$elapsed",
-			"",
-		])
+        Returns:
+            the execution script content
+        """
+        return "\n".join([
+            "#!/bin/bash",
+            "",
+            "start_time=$(date +%s.%3N)",
+            "python /code/run.py",
+            "end_time=$(date +%s.%3N)",
+            "elapsed=$(echo \"scale=3; $end_time - $start_time\" | bc)",
+            "echo \"-------\"",
+            "echo \"Execution time in milliseconds: \"$elapsed",
+            "",
+        ])
 
-	@property
-	def versions(self):
-		"""
-		Get all supported versions
+    @property
+    def versions(self):
+        """
+        Get all supported versions
 
-		Returns:
-			A dict of supported versions
-		"""
-		return self._versions
+        Returns:
+            A dict of supported versions
+        """
+        return self._versions
 
-	@property
-	def image(self):
-		"""
-		Get docker image name
+    @property
+    def image(self):
+        """
+        Get docker image name
 
-		Returns:
-			the docker image
-		"""
-		return self._image
+        Returns:
+            the docker image
+        """
+        return self._image
 
-	@property
-	def version(self):
-		"""
-		Get the default version
+    @property
+    def version(self):
+        """
+        Get the default version
 
-		Returns:
-			the default version
-		"""
-		return self._version
+        Returns:
+            the default version
+        """
+        return self._version
 
-	@property
-	def extension(self):
-		"""
-		Get the extension
+    @property
+    def extension(self):
+        """
+        Get the extension
 
-		Returns:
-			the extension
-		"""
-		return self._extension
+        Returns:
+            the extension
+        """
+        return self._extension
 
