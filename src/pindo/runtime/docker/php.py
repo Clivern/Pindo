@@ -60,10 +60,9 @@ class PHP():
         return "\n".join([
             "#!/bin/bash",
             "",
-            "start_time=$(date +%s.%3N)",
+            "start_time=$(date +%s%N)",
             "php /code/run.php",
-            "end_time=$(date +%s.%3N)",
-            "elapsed=$(echo \"scale=3; $end_time - $start_time\" | bc)",
+            "elapsed=$((($(date +%s%N) - $start_time)/1000000))",
             "echo \"-------\"",
             "echo \"Execution time in milliseconds: \"$elapsed",
             "",
