@@ -14,7 +14,7 @@ Pindo
     Build and Run Code in Docker.
 
 
-It supports a broad range of runtimes (programming languages) and versions.
+It supports a broad range of programming languages and versions.
 
 
 .. _pyscaffold-notes:
