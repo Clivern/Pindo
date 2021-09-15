@@ -22,4 +22,4 @@ It supports a broad range of runtimes (programming languages) and versions.
 Note
 ====
 
-This project is created and maintained for Interpret. see https://github.com/Clivern/Interpret
+This project is created and maintained for Cookie. see https://github.com/Clivern/Cookie
