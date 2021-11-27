@@ -17,9 +17,7 @@ Pindo
 It supports a broad range of programming languages and versions.
 
 
-.. _pyscaffold-notes:
-
 Note
 ====
 
-This project is created and maintained for Cookie. see https://github.com/Clivern/Cookie
+This project is created and maintained for Bulldog. see https://github.com/Clivern/Bulldog
