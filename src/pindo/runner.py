@@ -36,24 +36,20 @@ class Runner():
     """Factory Class for Runtime engine and Programming Languages Supported"""
 
     @classmethod
-    def docker(cls, local_storage_path, code, docker_client=None):
+    def docker(cls, code, docker_client=None):
         """
         Get an instance of docker engine
 
         Args:
-            local_storage_path: A local path to store files that get mounted into docker container
             code: an instance of Code class with the code snippet, language and version
 
         Returns:
             an instance of docker engine
         """
-        if not local_storage_path:
-            raise Exception("Local storage path must be provided!")
-
         if not code or not isinstance(code, Code):
             raise Exception("Code of type Code must be provided!")
 
-        return Engine(local_storage_path, code, docker_client)
+        return Engine(code, docker_client)
 
     @classmethod
     def go(cls, code, version, id=None, meta={}):

@@ -11,7 +11,7 @@
 Pindo
 =====
 
-    Build and Run Code in Docker.
+    Securely Build and Run Code in Docker.
 
 
 It supports a broad range of programming languages and versions.

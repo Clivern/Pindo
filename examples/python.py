@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     python_code = Runner.python(code, "3.9")
 
-    engine = Runner.docker("/etc/pindo", python_code)
+    engine = Runner.docker(python_code)
 
     engine.setup()
     print(engine.run())

@@ -2,15 +2,20 @@
 Changelog
 =========
 
+Version 0.3.0
+=============
+
+Cleanup stale arguments
+
 Version 0.2.8
 =============
 
-Fix go, rust and java runtimes
+Fix go, rust and java runtimes.
 
 Version 0.2.7
 =============
 
-- Support custom OCI runtimes for better isolation between the application and the host kernel
+- Support custom OCI runtimes for better isolation between the application and the host kernel.
 
 Version 0.2.6
 =============

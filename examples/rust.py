@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     rust_code = Runner.rust(code, "1.57.0")
 
-    engine = Runner.docker("/etc/pindo", rust_code)
+    engine = Runner.docker(rust_code)
 
     engine.setup()
     print(engine.run())

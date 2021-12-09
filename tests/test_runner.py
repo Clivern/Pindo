@@ -64,12 +64,8 @@ def test_runner():
     with pytest.raises(InvalidRuntimeVersion):
         Runner.java("~~", "1.0.0")
 
-    # Invalid storage path
-    with pytest.raises(Exception):
-        Runner.docker("", ruby_code, "~")
-
     # Invalid Code
     with pytest.raises(Exception):
-        Runner.docker("/etc/pindo", "", "~")
+        Runner.docker("", "~")
 
-    assert isinstance(Runner.docker("/etc/pindo", ruby_code, "~"), Engine) == True
+    assert isinstance(Runner.docker(ruby_code, "~"), Engine) == True

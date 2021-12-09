@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     java_code = Runner.java(code, "17.0", None, {"main_class": "HelloWorld"})
 
-    engine = Runner.docker("/etc/pindo", java_code)
+    engine = Runner.docker(java_code)
 
     engine.setup()
     print(engine.run())

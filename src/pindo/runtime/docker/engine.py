@@ -37,10 +37,9 @@ from pindo.exception.code_failed_to_run import CodeFailedToRun
 class Engine():
     """Docker Engine"""
 
-    def __init__(self, local_storage_path, code, docker_client=None):
+    def __init__(self, code, docker_client=None):
         self._code = code
         self._runtime = Engine.get_runtime(code)
-        self._local_storage_path = local_storage_path.rstrip("/")
         self._docker_client = docker.from_env() if docker_client is None else docker_client
 
     def run(self, configs={}):

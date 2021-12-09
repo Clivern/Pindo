@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     go_code = Runner.go(code, "1.17")
 
-    engine = Runner.docker("/etc/pindo", go_code)
+    engine = Runner.docker(go_code)
 
     engine.setup()
     print(engine.run())

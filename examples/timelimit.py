@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     php_code = Runner.php(code, "7.4")
 
-    engine = Runner.docker("/etc/pindo", php_code)
+    engine = Runner.docker(php_code)
 
     manager = Manager()
     out = manager.dict()
