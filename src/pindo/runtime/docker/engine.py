@@ -43,25 +43,49 @@ class Engine():
         self._local_storage_path = local_storage_path.rstrip("/")
         self._docker_client = docker.from_env() if docker_client is None else docker_client
 
-    def run(self):
+    def run(self, configs={}):
         """
         Execute the code on docker
 
         Returns:
             The output, execution and build time
         """
+        defaults = {
+            "mount_mode": "ro",
+            "mem_limit": "10m",
+            "cpu_period": 100000,
+            "cpu_quota": 50000
+        }
+
+        defaults.update(configs)
+
         try:
-            # Run container in background
-            container = self._docker_client.containers.run(
-                "{}:{}".format(self._runtime.image, self._runtime.version),
-                "bash /code/exec.sh",
-                name=self._code.id,
-                volumes={self._code.id: {'bind': '/code', 'mode': 'ro'}},
-                detach=True,
-                mem_limit="10m",
-                cpu_period=100000,
-                cpu_quota=50000
-            )
+            if "runtime" in defaults.keys():
+                # Run container in background using a different runtime
+                # like gvisor https://github.com/google/gvisor for better isolation
+                container = self._docker_client.containers.run(
+                    "{}:{}".format(self._runtime.image, self._runtime.version),
+                    "bash /code/exec.sh",
+                    name=self._code.id,
+                    volumes={self._code.id: {'bind': '/code', 'mode': defaults["mount_mode"]}},
+                    detach=True,
+                    mem_limit=defaults["mem_limit"],
+                    cpu_period=defaults["cpu_period"],
+                    cpu_quota=defaults["cpu_quota"],
+                    runtime=defaults["runtime"]
+                )
+            else:
+                # Run container in background using the default runtime
+                container = self._docker_client.containers.run(
+                    "{}:{}".format(self._runtime.image, self._runtime.version),
+                    "bash /code/exec.sh",
+                    name=self._code.id,
+                    volumes={self._code.id: {'bind': '/code', 'mode': defaults["mount_mode"]}},
+                    detach=True,
+                    mem_limit=defaults["mem_limit"],
+                    cpu_period=defaults["cpu_period"],
+                    cpu_quota=defaults["cpu_quota"]
+                )
         except Exception as e:
             raise CodeFailedToRun("Code %s failed to run: {}".format(self._code.id, str(e)))
 
