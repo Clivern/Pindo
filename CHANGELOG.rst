@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.2.6
+=============
+
+- Support isolated containers
+
 Version 0.2.4
 =============
 

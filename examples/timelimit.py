@@ -20,23 +20,45 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import json
 from pindo.runner import Runner
+from multiprocessing import Process, Manager
 
-if __name__ == "__main__":
+def f(engine, output):
+    try:
+        engine.setup()
+        r = engine.run()
+    except Exception as e:
+        output['result'] = {}
+        return
 
+    output['result'] = r
+
+
+if __name__ == '__main__':
     code = """
-    public class HelloWorld{
-
-         public static void main(String []args){
-            System.out.println("Hello World");
-         }
-    }
+    <?php
+    echo "Hello World";
     """
 
-    java_code = Runner.java(code, "17.0", None, {"main_class": "HelloWorld"})
+    php_code = Runner.php(code, "7.4")
 
-    engine = Runner.docker("/etc/pindo", java_code)
+    engine = Runner.docker("/etc/pindo", php_code)
 
-    engine.setup()
-    print(engine.run())
-    engine.cleanup()
+    manager = Manager()
+    out = manager.dict()
+
+    p = Process(target=f, args=(engine, out))
+    p.start()
+    p.join(timeout=30)
+    p.terminate()
+
+    if p.exitcode is None:
+        engine.cleanup()
+        print(out)
+        print(f'Oops, {p} timeouts!')
+
+    if p.exitcode == 0:
+        engine.cleanup()
+        print(out)
+        print(f'{p} finished in less than 30 seconds!')

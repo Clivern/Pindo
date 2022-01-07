@@ -51,21 +51,24 @@ class Engine():
             The output, execution and build time
         """
         try:
+            # Run container in background
             container = self._docker_client.containers.run(
                 "{}:{}".format(self._runtime.image, self._runtime.version),
                 "bash /code/exec.sh",
-                volumes={"{}/{}".format(self._local_storage_path, self._code.id): {'bind': '/code', 'mode': 'rw'}},
-                detach=True
+                name=self._code.id,
+                volumes={self._code.id: {'bind': '/code', 'mode': 'ro'}},
+                detach=True,
+                mem_limit="10m",
+                cpu_period=100000,
+                cpu_quota=50000
             )
         except Exception as e:
             raise CodeFailedToRun("Code %s failed to run: {}".format(self._code.id, str(e)))
 
         result = []
+
         for line in container.logs(stream=True):
             result.append(str(line, 'utf-8'))
-
-        # Remove the container
-        self._docker_client.api.remove_container(container.id, force=True, v=True)
 
         result = "".join(result)
         items = result.rsplit("-------", 1)
@@ -87,36 +90,82 @@ class Engine():
 
     def setup(self):
         """
-        Create an executable script on local host
+        Create an executable script on a docker volume
         """
-        path = "{}/{}".format(self._local_storage_path, self._code.id)
-        file = "{}/{}".format(path, "exec.sh")
+        try:
+            volume = self._docker_client.volumes.create(
+                name=self._code.id,
+                driver='local'
+            )
 
-        if self._code.lang == Lang.JAVA:
-            script = "{}/{}.{}".format(path, self._runtime.main_class, self._runtime.extension)
-        else:
-            script = "{}/run.{}".format(path, self._runtime.extension)
+            file = "{}/{}".format(volume.attrs['Mountpoint'], "exec.sh")
 
-        if not os.path.isdir(path):
-            os.makedirs(path)
+            if self._code.lang == Lang.JAVA:
+                # Java Script
+                script = "{}/{}.{}".format(
+                    volume.attrs['Mountpoint'],
+                    self._runtime.main_class,
+                    self._runtime.extension
+                )
+            else:
+                # Other Scripts
+                script = "{}/run.{}".format(
+                    volume.attrs['Mountpoint'],
+                    self._runtime.extension
+                )
 
-        f = open(file, "w")
-        f.write(self._runtime.script)
-        f.close()
+            f = open(file, "w")
+            f.write(self._runtime.script)
+            f.close()
 
-        f = open(script, "w")
-        f.write(self._code.code)
-        f.close()
+            f = open(script, "w")
+            f.write(self._code.code)
+            f.close()
 
-        st = os.stat(file)
-        os.chmod(file, st.st_mode | stat.S_IEXEC)
+        except Exception as e:
+            raise Exception("Error while creating volume: {}".format(str(e)))
 
     def cleanup(self):
         """
-        Remove code dir
+        Removes the code volume
         """
-        path = "{}/{}".format(self._local_storage_path, self._code.id)
-        shutil.rmtree(path)
+        try:
+            container = self._docker_client.containers.get(self._code.id)
+
+            if container:
+                self._docker_client.api.remove_container(container.id, force=True, v=True)
+
+            volume = self._docker_client.volumes.get(self._code.id)
+
+            if volume:
+                volume.remove(force=True)
+
+        except Exception as e:
+            raise Exception("Error while removing the volume: {}".format(str(e)))
+
+    @property
+    def code(self):
+        """
+        Returns:
+            The code instance
+        """
+        return self._code
+
+    @property
+    def runtime(self):
+        """
+        Returns:
+            The runtime instance
+        """
+        return self._runtime
+
+    @property
+    def docker_client(self):
+        """
+        Returns:
+            The docker client
+        """
+        return self._docker_client
 
     @classmethod
     def get_runtime(cls, code):
@@ -145,7 +194,7 @@ class Engine():
             if "main_class" in code.meta.keys():
                 main_class = code.meta["main_class"]
             else:
-                main_class = "Run"
+                main_class = "Main"
 
             return Java(code.version, main_class)
 
