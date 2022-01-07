@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.2.8
+=============
+
+Fix go, rust and java runtimes
+
 Version 0.2.7
 =============
 
