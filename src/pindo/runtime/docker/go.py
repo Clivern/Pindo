@@ -62,7 +62,9 @@ class Go():
         return "\n".join([
             "#!/bin/bash",
             "",
-            "cd /code",
+            "mkdir -p /tmp",
+            "cp -r /code/* /tmp/",
+            "cd /tmp",
             "start_time1=$(date +%s%N)",
             "go build run.go",
             "elapsed1=$((($(date +%s%N) - $start_time1)/1000000))",

@@ -56,7 +56,9 @@ class Rust():
         return "\n".join([
             "#!/bin/bash",
             "",
-            "cd /code",
+            "mkdir -p /tmp",
+            "cp -r /code/* /tmp/",
+            "cd /tmp",
             "start_time1=$(date +%s%N)",
             "rustc run.rs",
             "elapsed1=$((($(date +%s%N) - $start_time1)/1000000))",

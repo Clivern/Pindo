@@ -62,7 +62,9 @@ class Java():
         return "\n".join([
             "#!/bin/bash",
             "",
-            "cd /code",
+            "mkdir -p /tmp",
+            "cp -r /code/* /tmp/",
+            "cd /tmp",
             "start_time1=$(date +%s%N)",
             "javac {}.java".format(self._main_class),
             "elapsed1=$((($(date +%s%N) - $start_time1)/1000000))",

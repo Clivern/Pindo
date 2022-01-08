@@ -60,8 +60,11 @@ class PHP():
         return "\n".join([
             "#!/bin/bash",
             "",
+            "mkdir -p /tmp",
+            "cp -r /code/* /tmp/",
+            "cd /tmp",
             "start_time=$(date +%s%N)",
-            "php /code/run.php",
+            "php /tmp/run.php",
             "elapsed=$((($(date +%s%N) - $start_time)/1000000))",
             "echo \"-------\"",
             "echo \"Execution time in milliseconds: \"$elapsed",

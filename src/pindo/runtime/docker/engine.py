@@ -52,7 +52,7 @@ class Engine():
         """
         defaults = {
             "mount_mode": "ro",
-            "mem_limit": "10m",
+            "mem_limit": "100m",
             "cpu_period": 100000,
             "cpu_quota": 50000
         }
