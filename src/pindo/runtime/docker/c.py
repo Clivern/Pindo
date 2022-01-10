@@ -21,39 +21,24 @@
 # SOFTWARE.
 
 
-class Ruby():
-    """Ruby Runtime Class"""
+class C():
+    """C Runtime Class"""
 
     # Docker Image
-    _image = "ruby"
+    _image = "gcc"
 
     # Default Version
-    _version = "3.0"
+    _version = "1.17"
 
     # All supported versions
     _versions = {
-        "2.6": "Version 2.6",
-        "2.6.1": "Version 2.6.1",
-        "2.6.2": "Version 2.6.2",
-        "2.6.3": "Version 2.6.3",
-        "2.6.4": "Version 2.6.4",
-        "2.6.5": "Version 2.6.5",
-        "2.6.6": "Version 2.6.6",
-        "2.6.7": "Version 2.6.7",
-        "2.6.8": "Version 2.6.8",
-        "2.6.9": "Version 2.6.9",
-        "2.7.0": "Version 2.7.0",
-        "2.7.1": "Version 2.7.1",
-        "2.7.3": "Version 2.7.3",
-        "2.7.4": "Version 2.7.4",
-        "2.7.5": "Version 2.7.5",
-        "3.0.0": "Version 3.0.0",
+        "9.4.0": "GCC Version 9.4.0",
     }
 
     # File extension
-    _extension = "rb"
+    _extension = "c"
 
-    def __init__(self, version="3.0"):
+    def __init__(self, version="9.4.0"):
         """Class Constructor"""
         self._version = version
 
@@ -71,11 +56,15 @@ class Ruby():
             "mkdir -p /tmp",
             "cp -r /code/* /tmp/",
             "cd /tmp",
-            "start_time=$(date +%s%N)",
-            "ruby /tmp/run.rb",
-            "elapsed=$((($(date +%s%N) - $start_time)/1000000))",
+            "start_time1=$(date +%s%N)",
+            "gcc -o run run.c",
+            "elapsed1=$((($(date +%s%N) - $start_time1)/1000000))",
+            "start_time2=$(date +%s%N)",
+            "./run",
+            "elapsed2=$((($(date +%s%N) - $start_time2)/1000000))",
             "echo \"-------\"",
-            "echo \"Execution time in milliseconds: \"$elapsed",
+            "echo \"Build time in milliseconds: \"$elapsed1",
+            "echo \"Execution time in milliseconds: \"$elapsed2",
             "",
         ])
 

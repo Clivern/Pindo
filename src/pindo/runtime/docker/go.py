@@ -116,4 +116,3 @@ class Go():
             the extension
         """
         return self._extension
-
