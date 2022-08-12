@@ -41,3 +41,4 @@ def test_lang():
     assert Lang.get_item("go") == Lang.GO
     assert Lang.get_item("python") == Lang.PYTHON
     assert Lang.get_item("php") == Lang.PHP
+    assert Lang.get_item("elixir") == Lang.ELIXIR

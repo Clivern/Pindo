@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 1.2.0
+=============
+
+- Support elixir runtime
+
 Version 1.1.1
 =============
 

@@ -29,6 +29,7 @@ from pindo.runtime.docker.php import PHP
 from pindo.runtime.docker.python import Python
 from pindo.runtime.docker.ruby import Ruby
 from pindo.runtime.docker.rust import Rust
+from pindo.runtime.docker.elixir import Elixir
 from pindo.runtime.docker.engine import Engine
 
 
@@ -39,6 +40,7 @@ def test_docker_engine():
     go_code = Runner.go("~~", "1.17")
     rust_code = Runner.rust("~~", "1.57.0")
     java_code = Runner.java("~~", "17.0")
+    elixir_code = Runner.elixir("~~", "1.13.4")
 
     assert isinstance(Engine.get_runtime(ruby_code), Ruby) == True
     assert isinstance(Engine.get_runtime(php_code), PHP) == True
@@ -46,3 +48,4 @@ def test_docker_engine():
     assert isinstance(Engine.get_runtime(go_code), Go) == True
     assert isinstance(Engine.get_runtime(rust_code), Rust) == True
     assert isinstance(Engine.get_runtime(java_code), Java) == True
+    assert isinstance(Engine.get_runtime(elixir_code), Elixir) == True

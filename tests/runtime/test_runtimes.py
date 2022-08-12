@@ -28,6 +28,7 @@ from pindo.runtime.docker.php import PHP
 from pindo.runtime.docker.python import Python
 from pindo.runtime.docker.ruby import Ruby
 from pindo.runtime.docker.rust import Rust
+from pindo.runtime.docker.elixir import Elixir
 
 
 def test_go_runtime():
@@ -99,6 +100,20 @@ def test_ruby_runtime():
     assert ruby_rt.image != ""
     assert ruby_rt.extension != ""
     assert ruby_rt.version == "1.0.0"
+
+
+def test_elixir_runtime():
+    """Elixir Runtime Tests"""
+    elixir_rt = Elixir("1.12.3")
+
+    assert isinstance(elixir_rt, Elixir) == True
+    assert elixir_rt.script != ""
+    assert "#!/bin/bash" in elixir_rt.script
+    assert isinstance(elixir_rt.versions, dict) == True
+    assert len(elixir_rt.versions) > 0
+    assert elixir_rt.image != ""
+    assert elixir_rt.extension != ""
+    assert elixir_rt.version == "1.12.3"
 
 
 def test_rust_runtime():

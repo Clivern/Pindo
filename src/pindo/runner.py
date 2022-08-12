@@ -27,6 +27,7 @@ from .runtime.docker.go import Go
 from .runtime.docker.php import PHP
 from .runtime.docker.rust import Rust
 from .runtime.docker.ruby import Ruby
+from .runtime.docker.elixir import Elixir
 from .runtime.docker.java import Java
 from .runtime.docker.cplus import Cplus
 from .runtime.docker.python import Python
@@ -119,6 +120,28 @@ class Runner():
             ))
 
         return Code(code, Lang.RUBY, version, id, meta)
+
+    @classmethod
+    def elixir(cls, code, version, id=None, meta={}):
+        """
+        Get an instance of elixir runtime
+
+        Args:
+            code: the code snippet to run
+            version: the language version
+            id: code item uuid
+            meta: meta data that may be needed for the runtime
+
+        Returns:
+            an instance of Code class
+        """
+        if version not in Elixir().versions.keys():
+            raise InvalidRuntimeVersion("Invalid version {} for runtime {}".format(
+                version,
+                Lang.ELIXIR.value
+            ))
+
+        return Code(code, Lang.ELIXIR, version, id, meta)
 
     @classmethod
     def java(cls, code, version, id=None, meta={}):

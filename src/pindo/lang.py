@@ -34,6 +34,7 @@ class Lang(Enum):
     RUBY = "ruby"
     C = "c"
     CPLUS = "cplus"
+    ELIXIR = "elixir"
 
     @classmethod
     def get_item(cls, key):
@@ -69,3 +70,6 @@ class Lang(Enum):
 
         elif key == "cplus":
             return cls.CPLUS
+
+        elif key == "elixir":
+            return cls.ELIXIR
